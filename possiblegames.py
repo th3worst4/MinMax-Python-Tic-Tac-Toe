@@ -12,9 +12,11 @@ def play():
 
 def nextRound(symb, possibleGames, round, pnt1 = 0, pnt2 = 0):
     if round == 9:
-        print(pnt1)
-        print(pnt2)
-        print(len(possibleGames))
+        #print(pnt1)
+        #print(pnt2)
+        #print(len(possibleGames))
+        for i in possibleGames:
+            logFile(i, 0)
         return
     else:
         symb *= -1
@@ -25,12 +27,16 @@ def nextRound(symb, possibleGames, round, pnt1 = 0, pnt2 = 0):
                 if game[i] == 0:
                     aux[i] = symb
                     if checkVictory(organazingGame(aux), symb):
+                        logFile(aux, symb)
+                        """""
                         if symb == 1:
                             pnt1+=1
                         else:
                             pnt2-=1
+                        """""
                         continue
-                    newPossible.append(aux)
+                    else:
+                        newPossible.append(aux)       
                 else:
                     continue
         round+=1
@@ -66,4 +72,11 @@ def checkVictory(matrix, symb):
 
     return victory
 
+def logFile(matrix, symb):
+    f = open("logGameData.dat", "a")
+    f.write(str(matrix) + " | " + str(symb) +"\n")
+    f.close()
+
+f = open("logGameData.dat", "x")
+f.close()
 play()
